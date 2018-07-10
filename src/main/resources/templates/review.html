@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Currently Selected Review</title>
+</head>
+<body>
+	<div th:each="review:${reviews}">
+		<h1>
+			<p th:text="${review.id} + ' - ' + ${review.title}"></p>
+		</h1>
+		<h2>
+			<p th:text="${review.description}"></p>
+		</h2>
+		<p th:text="${review.content}"></p>
+
+		<h3>
+			<p>Recommendation?</p>
+			<img th:attr="src=@{|images/${review.imageUrl}.jpg|}" th:height="50"
+				th:width="50"></img>
+		</h3>
+
+
+		<h4>
+			<p th:text="'Category: ' + ${review.category}"></p>
+			<p th:text="'Date: ' + ${review.date}"></p>
+		</h4>
+
+		<a href="http://localhost:8080/show-reviews">Back to home</a>
+
+	</div>
+</body>
+</html>
