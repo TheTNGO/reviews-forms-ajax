@@ -7,6 +7,8 @@ import org.wecancodeit.reviews.reviewsfullstack.Review;
 @Repository
 public interface ReviewRepository extends CrudRepository<Review, Long>  {
 
+	Object findAllByCategory(Category category);
+
 
 	
 }

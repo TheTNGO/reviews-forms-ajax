@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>Reviews - "The Cat in the Hat" by Dr. Seuss - All</title>
-</head>
-<body>
-	<h1>All Reviews of "The Cat in the Hat" by Dr. Seuss</h1>
 
-	<div th:each="review: ${reviews}">
-		<li><img th:attr="src=@{|images/${review.imageUrl}.jpg|}"
-			th:height="35" th:width="35"></img>
-			<h3>
-				<a th:href="@{/review(id=${review.id})}" th:text="${review.id} + ' - ' + ${review.date} + ' - ' + ${review.title}"></a>
-			</h3></li>
-	</div>
+<head>
+	<title>Weapon Selector - Reviews</title>
+</head>
+
+<body>
+
+	<header>
+		<h1>Digital Tool Shed</h1>
+		<h2>Your hub for all things gaming peripherals.</h2>
+	</header>
+	<main>
+		<h3>Reviews</h3>
+		<div th:each="review: ${reviews}">
+			<li>
+				<img th:attr="src=@{|images/${review.imageUrl}.jpg|}" th:height="35" th:width="35"></img>
+				<p>
+					<a th:href="@{/review(id=${review.id})}" th:text="${review.id} + ' - ' + ${review.date} + ' - ' + ${review.title}"></a>
+				</p>
+			</li>
+			</div>
+	</main>
 
 </body>
+
 </html>
