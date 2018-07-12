@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -15,38 +16,6 @@ import org.junit.runners.model.FrameworkMethod;
 @Entity
 public class Review {
 
-	
-	public Review() {
-		
-	}
-	
-	public Review(long id, String title, String description, Category category, String content, String date,
-			String imageUrl) {
-		this.id = id;
-		this.title = title;
-		this.date = date;
-		this.category = category;
-
-		this.description = description;
-		this.content = content;
-		this.imageUrl = imageUrl;
-	}
-
-	public Review(long id, String title, String description, String date) {
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.date = date;
-
-	}
-	
-	// Conversion Constructor
-	public Review(String title, String description, Category category) {
-		this.title = title;
-		this.description = description;
-		this.category = category;
-	}
-
 	@Id
 	@GeneratedValue
 	private long id;
@@ -56,10 +25,51 @@ public class Review {
 
 	private String title;
 	private String description;
+	private String productName;
 
+	@Lob
 	private String content;
+
 	private String date;
 	private String imageUrl;
+
+	/* Constructors */
+
+	// JPA Constructor
+	public Review() {
+	}
+
+	// Standard Constructors
+	public Review(String title, String description, Category category, String content, String date, String imageUrl) {
+
+		this.title = title;
+		this.date = date;
+		this.category = category;
+
+		this.description = description;
+		this.content = content;
+		this.imageUrl = imageUrl;
+	}
+
+	public Review(String title, String description, String date) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.date = date;
+
+	}
+
+	// Testing Constructors
+	public Review(String title, String description, Category category) {
+		this.title = title;
+		this.description = description;
+		this.category = category;
+	}
+
+	public Review(String string, String string2, String string3, String string4, String string5) {
+	}
+
+	/* Accessors */
 
 	public long getId() {
 		return this.id;
@@ -68,10 +78,6 @@ public class Review {
 	public String getTitle() {
 		return this.title;
 	}
-
-//	public String getCategory() {
-//		return this.category;
-//	}
 
 	public String getContent() {
 		return this.content;
@@ -91,6 +97,32 @@ public class Review {
 
 	public Category getCategory() {
 		return category;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Review other = (Review) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 }

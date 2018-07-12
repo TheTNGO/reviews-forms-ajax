@@ -5,11 +5,12 @@ H2
 Create a Category class that:
 	*DONE* is a JPA entity.
 	*DONE* contains an instance variable referencing the Reviews it contains.
-	configures an appropriate JPA relationship to its reviews.
+	*DONE* configures an appropriate JPA relationship to its reviews.
 Update the Review class such that:
 	*DONE* it is a JPA entity.
 	*DONE* configures a JPA relationship to its associated category.
 	allows for a description/content/body longer than 255 characters.
+	clean up constructors
 Update your view (templates/html/css) such that:
 	there is a page that lists review categories, each of which links to the (details) page for a specific category.
 	there is a page that lists the reviews for a chosen category, each of which links to the (details) page for a specific review.
