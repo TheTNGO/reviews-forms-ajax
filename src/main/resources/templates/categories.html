@@ -10,8 +10,11 @@
 
 
 <header>
-    <h1>Digital Tool Shed</h1>
-    <h2>Your hub for all things gaming peripherals.</h2>
+    <h1>
+        <p>Digital Tool Shed</p>
+    </h1>
+    <p>Your hub for all things gaming peripherals.</p>
+
 </header>
 
 <body>
@@ -23,12 +26,15 @@
 
                 <a class="category-links" th:href="@{/category(id=${category.id})}">
                     <img th:src="@{|images\${category.imageUrl}|}" th:alt="${category.imageUrl}" height="100" width="100">
-                    <p th:text="${category.name}"></p> 
+                    <p th:text="${category.name}"></p>
                 </a>
-
             </div>
         </div>
     </main>
+
+    <nav class="end-of-page">
+        <a th:text="'All Reviews'" th:href="@{/show-reviews}"></a>
+    </nav>
 
 
 

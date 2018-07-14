@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Currently Selected Review</title>
+	<title>Currently Selected Review</title>
 </head>
+
 <body>
-	
+
+	<header>
 		<h1>
-			<p th:text="${review.id} + ' - ' + ${review.title}"></p>
+			<p>Digital Tool Shed</p>
+		</h1>
+		<p>Your hub for all things gaming peripherals.</p>
+	</header>
+
+	<main>
+		<h1>
+			<!--Change IMG size in stylesheets later-->
+			<img th:src="@{|images\${review.imageUrl}|}" width="320" height="240"></img>
+			<p th:text="${review.title}"></p>
 		</h1>
 		<h2>
 			<p th:text="${review.description}"></p>
 		</h2>
 		<p th:text="${review.content}"></p>
 
-		<h3>
-			<p>Recommendation?</p>
-			<img th:src="@{|images\${review.imageUrl}|}" th:height="50"
-				th:width="50"></img>
-		</h3>
-		C:\Users\WeCanCodeIT\wcci\code\repos\reviews-full-stack\src\main\resources\static\images\g303.jpg
-
 		<h4>
-			
 			<p th:text="'Date: ' + ${review.date}"></p>
+			<p th:text="'Review ID: ' + ${review.id}"></p>
 		</h4>
+	</main>
 
-		<a href="http://localhost:8080/show-reviews">Back to home</a>
+
+	<nav class="end-of-page">
+		<p>
+			<a th:text="'Back to All Categories'" th:href="@{/show-categories}"></a>
+		</p>
+		<p>
+			<a th:text="'Back to ' + ${review.category.name}" th:href="@{/category(id=${review.category.id})}"></a>
+		</p>
+	</nav>
+
 
 </body>
+
 </html>
