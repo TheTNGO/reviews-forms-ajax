@@ -4,8 +4,18 @@
         <h2 th:text=${category.name}></h2>
         <div th:each="review : ${category.reviews}">
             <a th:text="${review.title}" th:href="@{/review(id=${review.id})}"></a>
-
-        </div>
+  </div>
+---------------------------------------------------------------------------------------
+			<div th:each="review: ${reviews}">
+			<ul>
+				<li>
+					<img th:src="@{|images\${review.imageUrl}|}" width="160" height="120"></img>
+					<p>
+						<a th:href="@{/review(id=${review.id})}" th:text="${review.date} + ' - ' + ${review.title}"></a>
+					</p>
+				</li>
+			</ul>
+		</div>
 
 
 

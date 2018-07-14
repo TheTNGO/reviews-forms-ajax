@@ -28,6 +28,8 @@ public class ReviewController {
 	@RequestMapping("/show-reviews")
 	public String findAllReviews(Model model) { 
 		model.addAttribute("reviews", reviewRepo.findAll());
+		model.addAttribute("categories", categoryRepo.findAll());
+		
 		return "reviews";
 	}
 	

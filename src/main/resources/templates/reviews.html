@@ -13,15 +13,17 @@
 	</header>
 	<main>
 		<h3>Reviews</h3>
-		<div th:each="review: ${reviews}">
-			<ul>
-				<li>
-					<img th:src="@{|images\${review.imageUrl}|}" width="160" height="120"></img>
-					<p>
-						<a th:href="@{/review(id=${review.id})}" th:text="${review.date} + ' - ' + ${review.title}"></a>
-					</p>
-				</li>
-			</ul>
+
+
+		<div th:each="category: ${categories}">
+			<h4 th:text=${category.name}></h4>
+			<div th:each="review : ${category.reviews}">
+				<img th:src="@{|images\${review.imageUrl}|}" width="160" height="120"></img>
+				<p>
+					<a th:text="${review.title}" th:href="@{/review(id=${review.id})}"></a>
+				</p>
+
+			</div>
 		</div>
 	</main>
 
