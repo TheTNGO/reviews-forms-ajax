@@ -15,13 +15,13 @@
 
 		<h3>
 			<p>Recommendation?</p>
-			<img th:attr="src=@{|images/${review.imageUrl}.jpg|}" th:height="50"
+			<img th:src="@{|images\${review.imageUrl}|}" th:height="50"
 				th:width="50"></img>
 		</h3>
-
+		C:\Users\WeCanCodeIT\wcci\code\repos\reviews-full-stack\src\main\resources\static\images\g303.jpg
 
 		<h4>
-			<p th:text="'Category: ' + ${review.category.name}"></p>
+			
 			<p th:text="'Date: ' + ${review.date}"></p>
 		</h4>
 

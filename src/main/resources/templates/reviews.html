@@ -15,7 +15,7 @@
 		<h3>Reviews</h3>
 		<div th:each="review: ${reviews}">
 			<li>
-				<img th:attr="src=@{|images/${review.imageUrl}.jpg|}" th:height="35" th:width="35"></img>
+				<img th:src="@{|images\${review.imageUrl}|}" th:height="35" th:width="35"></img>
 				<p>
 					<a th:href="@{/review(id=${review.id})}" th:text="${review.id} + ' - ' + ${review.date} + ' - ' + ${review.title}"></a>
 				</p>

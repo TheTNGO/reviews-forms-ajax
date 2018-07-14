@@ -31,7 +31,7 @@ public class JPAMappingsTest {
 
 	@Test
 	public void shouldSaveAndLoadReviewInRepo() {
-		Category category = categoryRepo.save(new Category("Name"));
+		Category category = categoryRepo.save(new Category("Name", "Test"));
 		Review review = reviewRepo.save(new Review("Title", "Description", category));
 		long reviewId = review.getId();
 
@@ -46,7 +46,7 @@ public class JPAMappingsTest {
 
 	@Test
 	public void shouldSaveAndLoadCategoryInRepo() {
-		Category category = categoryRepo.save(new Category("Cat Name"));
+		Category category = categoryRepo.save(new Category("Cat Name", "Test"));
 		long categoryId = category.getId();
 
 		entityManager.flush();
@@ -61,7 +61,7 @@ public class JPAMappingsTest {
 	@Test
 	public void shouldEstablishReviewCategoryRelationship() {
 
-		Category category = categoryRepo.save(new Category("Mice"));
+		Category category = categoryRepo.save(new Category("Mice", "Test"));
 		Review review1 = reviewRepo.save(new Review("Review 1", "Description", category));
 		Review review2 = reviewRepo.save(new Review("Review 2", "Description", category));
 

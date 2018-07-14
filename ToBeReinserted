@@ -1,3 +1,14 @@
+ // Loop for displaying All categories WITH reviews
+ 
+  <div th:each="category: ${categories}">
+        <h2 th:text=${category.name}></h2>
+        <div th:each="review : ${category.reviews}">
+            <a th:text="${review.title}" th:href="@{/review(id=${review.id})}"></a>
+
+        </div>
+
+
+
 /* Sample Reviews */
 
 	public ReviewRepository() {

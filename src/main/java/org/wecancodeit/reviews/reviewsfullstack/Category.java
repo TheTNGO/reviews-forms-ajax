@@ -13,30 +13,38 @@ public class Category {
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@OneToMany(mappedBy="category")
+
+	@OneToMany(mappedBy = "category")
 	private Collection<Review> reviews;
-	
+
 	private String name;
-	
+
+	private String imageUrl;
+
 	public Category() {
-		
+
 	}
 
-	public Category(String name) {
+
+	public Category(String name, String imageUrl) {
 		this.name = name;
+		this.imageUrl = imageUrl;
 	}
 
 	public long getId() {
 		return id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
 
 	public Collection<Review> getReviews() {
 		return reviews;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
 }

@@ -9,7 +9,7 @@ Create a Category class that:
 Update the Review class such that:
 	*DONE* it is a JPA entity.
 	*DONE* configures a JPA relationship to its associated category.
-	allows for a description/content/body longer than 255 characters.
+	*DONE* allows for a description/content/body longer than 255 characters.
 	clean up constructors
 Update your view (templates/html/css) such that:
 	there is a page that lists review categories, each of which links to the (details) page for a specific category.
