@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
-        <div th:each="review : ${category.reviews}">
-			<a th:text="${review.title}" th:href="@{/review(id=${review.id})}"></a>
 
-		</div>
-    
+<body>
+
+    <header>
+        <h1>Digital Tool Shed</h1>
+        <p>Your hub for all things gaming peripherals.</p>
+    </header>
+
+    <main>
+
+        <h2 th:text="'All ' + ${category.name} + ' reviews:'"></h2>
+        <div th:each="review : ${category.reviews}">
+            <a class="review-links" th:href="@{/review(id=${review.id})}">
+                <img th:src="@{|images\${review.imageUrl}|}" th:alt="${review.imageUrl}" height="100" width="100">
+                <p th:text="${review.title}"></p>
+            </a>
+        </div>
+        <a th:text="'Back to Categories'" th:href="@{/show-categories}"></a>
+    </main>
+
+
 </body>
+
 </html>
