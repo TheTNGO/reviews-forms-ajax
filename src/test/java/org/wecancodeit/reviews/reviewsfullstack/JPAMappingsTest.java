@@ -16,7 +16,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.w3c.dom.Comment;
 import org.wecancodeit.reviews.reviewsfullstack.Category;
 import org.wecancodeit.reviews.reviewsfullstack.Review;
 
@@ -154,17 +153,34 @@ public class JPAMappingsTest {
 	}
 	
 	@Test
-	public void shouldFindCommentsForReview() {
+	public void shouldFindCommentsForReviewId() {
 		Review review = reviewRepo.save(new Review("mouse"));
+		Long reviewId = review.getId();
 		
 		UserComment comment1 = userCommentRepo.save(new UserComment("user1", "comment", review));
 		UserComment comment2 = userCommentRepo.save(new UserComment("user2", "comment", review));
 
 		
-		Collection<UserComment> commentsForReview = userCommentRepo.findByReviewContains(review);
+		Collection<UserComment> commentsForReview = userCommentRepo.findByReviewId(reviewId);
 		
 		assertThat(commentsForReview, containsInAnyOrder(comment1, comment2));
 	}
+	
+	
+	@Test
+	public void shouldFindCommentsForReview() {
+		Review review = reviewRepo.save(new Review("mouse"));
+		Long reviewId = review.getId();
+		
+		UserComment comment1 = userCommentRepo.save(new UserComment("user1", "comment", review));
+		UserComment comment2 = userCommentRepo.save(new UserComment("user2", "comment", review));
+
+		
+		Collection<UserComment> commentsForReview = userCommentRepo.findByReview(review);
+		
+		assertThat(commentsForReview, containsInAnyOrder(comment1, comment2));
+	}
+	
 	
 
 }
