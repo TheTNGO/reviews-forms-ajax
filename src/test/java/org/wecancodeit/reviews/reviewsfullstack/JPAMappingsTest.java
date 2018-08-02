@@ -2,9 +2,11 @@ package org.wecancodeit.reviews.reviewsfullstack;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.annotation.Resource;
@@ -111,39 +113,58 @@ public class JPAMappingsTest {
 	// Comment-Review: Many-To-One
 	// Review-Comment: One-To-Many
 	public void shouldEstablishReviewUserCommentRelationship() {
-		
+
 		Review review = reviewRepo.save(new Review("Review 1"));
 
 		UserComment comment1 = userCommentRepo.save(new UserComment("user1", "comment", review));
 		UserComment comment2 = userCommentRepo.save(new UserComment("user2", "comment", review));
 
-		
-
 		long comment1Id = comment1.getId();
 		long comment2Id = comment2.getId();
 		long reviewId = review.getId();
-		
+
 		entityManager.flush();
 		entityManager.clear();
-		
+
 		Optional<Review> reviewOptional = reviewRepo.findById(reviewId);
 		Optional<UserComment> comment1Optional = userCommentRepo.findById(comment1Id);
 		Optional<UserComment> comment2Optional = userCommentRepo.findById(comment2Id);
-		
+
 		Review reviewResult = reviewOptional.get();
 		UserComment comment1Result = comment1Optional.get();
 		UserComment comment2Result = comment2Optional.get();
-		
-		long reviewResultId = reviewResult.getId();	
-		
-		
+
+		long reviewResultId = reviewResult.getId();
+
 		assertThat(comment1Result.getReview().getId(), is(reviewResultId));
-//		assertThat(comment1.getId(), is(comment1Result.getId()));
+
 		assertThat(reviewResult.getUserComments(), containsInAnyOrder(comment1, comment2));
 
-		
-
-
 	}
+	
+	@Test
+	public void shouldGenerateCommentId() {
+		UserComment comment = userCommentRepo.save(new UserComment("User1", "Test Comment"));
+		long commentId = comment.getId();
+		
+		entityManager.flush(); 
+		entityManager.clear();
+		
+		assertThat(commentId, is(greaterThan(0L)));
+	}
+	
+	@Test
+	public void shouldFindCommentsForReview() {
+		Review review = reviewRepo.save(new Review("mouse"));
+		
+		UserComment comment1 = userCommentRepo.save(new UserComment("user1", "comment", review));
+		UserComment comment2 = userCommentRepo.save(new UserComment("user2", "comment", review));
+
+		
+		Collection<UserComment> commentsForReview = userCommentRepo.findByReviewContains(review);
+		
+		assertThat(commentsForReview, containsInAnyOrder(comment1, comment2));
+	}
+	
 
 }

@@ -80,9 +80,8 @@ public class Review {
 	public Review(String string, String string2, String string3, String string4, String string5) {
 	}
 	
-	public Review(String title, UserComment...userComments) {
+	public Review(String title) {
 		this.title = title;
-		this.userComments = new HashSet<>(Arrays.asList(userComments));
 	}
 
 	/* Accessors */
