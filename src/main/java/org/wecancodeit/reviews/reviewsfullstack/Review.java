@@ -1,6 +1,8 @@
 package org.wecancodeit.reviews.reviewsfullstack;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +24,9 @@ public class Review {
 
 	@ManyToOne
 	private Category category;
+	
+	@OneToMany(mappedBy = "review")
+	private Collection<UserComment> userComments;
 
 	private String title;
 	private String description;
@@ -39,8 +44,13 @@ public class Review {
 	public Review() {
 	}
 
-	// Standard Constructors
-	public Review(String title, String description, Category category, String content, String date, String imageUrl) {
+	// Production Constructors
+	public Review(	String title, 
+					String description, 
+					Category category, 
+					String content, 
+					String date, 
+					String imageUrl	) {
 
 		this.title = title;
 		this.date = date;
@@ -60,6 +70,7 @@ public class Review {
 	}
 
 	// Testing Constructors
+	
 	public Review(String title, String description, Category category) {
 		this.title = title;
 		this.description = description;
@@ -67,6 +78,11 @@ public class Review {
 	}
 
 	public Review(String string, String string2, String string3, String string4, String string5) {
+	}
+	
+	public Review(String title, UserComment...userComments) {
+		this.title = title;
+		this.userComments = new HashSet<>(Arrays.asList(userComments));
 	}
 
 	/* Accessors */
@@ -102,6 +118,10 @@ public class Review {
 	public String getProductName() {
 		return productName;
 	}
+	
+	public Collection<UserComment> getUserComments() {
+		return userComments;
+	}
 
 	@Override
 	public int hashCode() {
@@ -124,5 +144,8 @@ public class Review {
 			return false;
 		return true;
 	}
+
+
+	
 
 }

@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.w3c.dom.Comment;
 import org.wecancodeit.reviews.reviewsfullstack.Category;
 import org.wecancodeit.reviews.reviewsfullstack.Review;
 
@@ -25,6 +26,9 @@ public class JPAMappingsTest {
 
 	@Resource
 	private CategoryRepository categoryRepo;
+
+	@Resource
+	private UserCommentRepository userCommentRepo;
 
 	@Resource
 	private EntityManager entityManager;
@@ -81,6 +85,58 @@ public class JPAMappingsTest {
 
 		assertThat(resultReview1.getCategory().getName(), is("Mice"));
 		assertThat(resultCategory.getReviews(), containsInAnyOrder(resultReview1, resultReview2));
+
+	}
+
+	/* Comments Tests */
+
+	@Test
+	public void shouldSaveAndLoadCommentInRepo() {
+
+		UserComment comment = userCommentRepo.save(new UserComment("user", "comment"));
+		long commentId = comment.getId();
+
+		entityManager.flush();
+		entityManager.clear();
+
+		Optional<UserComment> resultOptional = userCommentRepo.findById(commentId);
+		comment = resultOptional.get();
+
+		assertThat(comment.getUser(), is("user"));
+
+	}
+
+	@Test
+	// Comment-Review: Many-To-One
+	// Review-Comment: One-To-Many
+	public void shouldEstablishReviewUserCommentRelationship() {
+
+		UserComment comment1 = userCommentRepo.save(new UserComment("user1", "comment"));
+		UserComment comment2 = userCommentRepo.save(new UserComment("user1", "comment"));
+
+		Review review = reviewRepo.save(new Review("Review 1", comment1, comment2));
+
+		long comment1Id = comment1.getId();
+		long comment2Id = comment2.getId();
+		long reviewId = review.getId();
+		
+		entityManager.flush();
+		entityManager.clear();
+		
+		Optional<Review> reviewOptional = reviewRepo.findById(reviewId);
+		Optional<UserComment> comment1Optional = userCommentRepo.findById(comment1Id);
+		Optional<UserComment> comment2Optional = userCommentRepo.findById(comment2Id);
+		
+		Review reviewResult = reviewOptional.get();
+		UserComment comment1Result = comment1Optional.get();
+		UserComment comment2Result = comment2Optional.get();
+		
+//		assertThat(reviewResult.getTitle(), is("Review 1"));
+//		assertThat(comment1.getId(), is(comment1Result.getId()));
+		assertThat(reviewResult.getUserComments(), containsInAnyOrder(comment1, comment2));
+
+		
+
 
 	}
 
