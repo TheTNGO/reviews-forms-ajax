@@ -1,5 +1,6 @@
 package org.wecancodeit.reviews.reviewsfullstack;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -83,8 +84,8 @@ public class JPAMappingsTest {
 		Review resultReview1 = reviewOptional1.get();
 		Review resultReview2 = reviewOptional2.get();
 
-		assertThat(resultReview1.getCategory().getName(), is("Mice"));
-		assertThat(resultCategory.getReviews(), containsInAnyOrder(resultReview1, resultReview2));
+//		assertThat(resultReview1.getCategory().getName(), is("Mice"));
+		assertThat(resultCategory.getReviews(), containsInAnyOrder(resultReview2, resultReview1));
 
 	}
 
@@ -110,11 +111,13 @@ public class JPAMappingsTest {
 	// Comment-Review: Many-To-One
 	// Review-Comment: One-To-Many
 	public void shouldEstablishReviewUserCommentRelationship() {
+		
+		Review review = reviewRepo.save(new Review("Review 1"));
 
-		UserComment comment1 = userCommentRepo.save(new UserComment("user1", "comment"));
-		UserComment comment2 = userCommentRepo.save(new UserComment("user1", "comment"));
+		UserComment comment1 = userCommentRepo.save(new UserComment("user1", "comment", review));
+		UserComment comment2 = userCommentRepo.save(new UserComment("user2", "comment", review));
 
-		Review review = reviewRepo.save(new Review("Review 1", comment1, comment2));
+		
 
 		long comment1Id = comment1.getId();
 		long comment2Id = comment2.getId();
@@ -131,7 +134,10 @@ public class JPAMappingsTest {
 		UserComment comment1Result = comment1Optional.get();
 		UserComment comment2Result = comment2Optional.get();
 		
-//		assertThat(reviewResult.getTitle(), is("Review 1"));
+		long reviewResultId = reviewResult.getId();	
+		
+		
+		assertThat(comment1Result.getReview().getId(), is(reviewResultId));
 //		assertThat(comment1.getId(), is(comment1Result.getId()));
 		assertThat(reviewResult.getUserComments(), containsInAnyOrder(comment1, comment2));
 

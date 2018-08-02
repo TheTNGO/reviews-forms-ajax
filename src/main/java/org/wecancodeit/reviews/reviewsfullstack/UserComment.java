@@ -42,13 +42,26 @@ public class UserComment {
 	
 	
 	// Test Constructors
+	
 	public UserComment(String user, String content) {
 		this.user = user;
 		this.content = content;
+		
 	}
+
+	
+	
+
 	
 	
 	/* Accessors */
+	
+	
+
+	public Review getReview() {
+		return this.review;
+				
+	}
 	
 	public long getId() {
 		return this.id;
@@ -86,6 +99,8 @@ public class UserComment {
 			return false;
 		return true;
 	}
+
+
 
 	
 	

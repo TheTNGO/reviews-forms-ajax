@@ -1,0 +1,12 @@
+Comments
+	DONE * Create comment class (with tests)
+		 
+		 * create form/controller methods
+		 
+		 * update single-review page to display comments
+		 
+		 * create Spring JPA repos
+		 	DONE * Comments
+		 		 * Tags
+
+Tags
