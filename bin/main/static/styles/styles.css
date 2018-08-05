@@ -1,0 +1,25 @@
+.existingComments {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    width: 300px;
+    background-color: lightgrey;
+}
+
+.existingComments > p{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.noComments{
+    text-align: center;
+    width: 150px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: lightgrey;
+}
+
+#commentForm{
+    margin:10px;
+}
