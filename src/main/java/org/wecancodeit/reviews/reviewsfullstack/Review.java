@@ -27,6 +27,9 @@ public class Review {
 	
 	@OneToMany(mappedBy = "review")
 	private Collection<UserComment> userComments;
+	
+	@ManyToMany(mappedBy = "reviews")
+	private Collection<Tag> tags;
 
 	private String title;
 	private String description;

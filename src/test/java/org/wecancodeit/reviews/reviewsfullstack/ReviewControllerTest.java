@@ -38,6 +38,15 @@ public class ReviewControllerTest {
 
 	@Mock
 	private UserComment comment02;
+	
+	@Mock
+	private Tag tag01;
+	
+	@Mock
+	private Tag tag02;
+	
+	@Mock
+	private TagRepository tagRepo;	
 
 	@Mock
 	private ReviewRepository reviewRepo;
@@ -73,7 +82,7 @@ public class ReviewControllerTest {
 	}
 
 	@Test
-	public void shouldAddAdditionalCoursesToModel() {
+	public void shouldAddAdditionalCommentsToModel() {
 		
 		Long arbitraryReviewId = 1L;
 		String reviewName = "review name";
@@ -90,6 +99,16 @@ public class ReviewControllerTest {
 		when(commentRepo.save(newComment)).thenReturn(newComment);
 		
 
+	}
+	
+	@Test
+	public void shouldAddAllTagsToModel() {
+		Collection<Tag> allTags = Arrays.asList(tag01, tag02);
+		when(tagRepo.findAll()).thenReturn(allTags);
+
+		testController.findAllUserComments(model);
+		verify(model).addAttribute("tags", allTags);
+		
 	}
 
 }

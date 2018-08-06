@@ -1,12 +1,18 @@
 Comments
 	DONE * Create comment class (with tests)
 		 
-		 * create form/controller methods
+	DONE * create form/controller methods
 		 
-		 * update single-review page to display comments
+	DONE * update single-review page to display comments
 		 
 		 * create Spring JPA repos
 		 	DONE * Comments
 		 		 * Tags
 
 Tags
+		* Create Tag class
+		* create tag REST controller
+		* allow user to add tags to reviews
+			* clicking on a tag should take user to a page that displays all reviews associated with that tag
+			
+		
