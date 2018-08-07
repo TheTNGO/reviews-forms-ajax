@@ -1,6 +1,8 @@
 // 8/6 11:51 PM
 // rewview.html Currently showing ALL TAGS IN REPO
-// Figure out how to only access tags in current reivew
+// Figured out how to only retrieve a single review JSON object
+// work on displaying topic tag naems
+// work  throwing topicURLS into JSON objects
 
 let reviewIdTag = document.querySelector('#reviewId');
 let reviewId = reviewIdTag.innerText;
@@ -11,13 +13,31 @@ const reviewIdXhr = new XMLHttpRequest()
 reviewIdXhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             jsonResponse = JSON.parse(reviewIdXhr.response);
+            // x = jsonResponse.tagNames[0];
             console.log({jsonResponse, reviewIdXhr});
 
+        const tagsContainer = document.querySelector('#tagsContainer');
+        
+        for (i = 0; i < jsonResponse.tagNames.length; i++) {
+            let tagNameJson = jsonResponse.tagNames[i];
+
+            const tagContainer = document.createElement('div');
+            
+            const tagNameText = document.createElement('p');
+            tagNameText.innerText = tagNameJson;
+
+            tagsContainer.appendChild(tagContainer);
+            tagContainer.appendChild(tagNameText);
+            
+
         }
+       
+       }
     }
 
+
 reviewIdXhr.open('GET', `http://localhost:8080/reviews-json/${reviewId}`);
-reviewIdXhr.send();
+reviewIdXhr.send()
 
 
     
@@ -27,13 +47,13 @@ reviewIdXhr.send();
 // xhr.onreadystatechange = function () {
 //     if (this.readyState == 4 && this.status == 200) {
 
-//         const resJsonObjects = JSON.parse(xhr.response);
+//         const jsonResponse = JSON.parse(xhr.response);
 //         console.log({resJsonObjects, xhr});
 
 //         const tagsContainer = document.querySelector('#tagsContainer');
 
-//         resJsonObjects.forEach(function(tag){
-            
+//         jsonResponse.forEach(function(review){
+            // review.tagName
 //             const tagItem = document.createElement('div');
 //             tagsContainer.appendChild(tagItem);
 
