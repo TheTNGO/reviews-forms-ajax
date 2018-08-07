@@ -61,6 +61,13 @@
 				</div>
 			</form>
 		</div>
+
+		<div id="tagsContainer">
+			<h2>Tags:</h2>
+			<div class="noComments"th:if="${review.tags.isEmpty()}">
+				<p>No tags. Add some!</p>
+			</div> 
+		</div>
 		
 
 	</main>
@@ -74,6 +81,8 @@
 			<a th:text="'Back to ' + ${review.category.name}" th:href="@{/category(id=${review.category.id})}"></a>
 		</p>
 	</nav>
+
+	<script src="./js/showAllTags.js"></script>
 
 
 </body>

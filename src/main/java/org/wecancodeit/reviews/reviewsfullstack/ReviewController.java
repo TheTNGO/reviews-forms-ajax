@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,9 @@ public class ReviewController {
 	@Resource
 	UserCommentRepository userCommentRepo;
 
+	@Resource
+	TagRepository tagRepo;
+
 	/* All Reviews */
 	@RequestMapping("/show-reviews")
 	public String findAllReviews(Model model) {
@@ -40,12 +44,14 @@ public class ReviewController {
 
 		Optional<Review> review = reviewRepo.findById(reviewId);
 		Review reviewOptionalResult = review.get();
+		
 
 		if (review.isPresent()) {
 			model.addAttribute("review", reviewOptionalResult);
 			return "review";
 		}
-
+		
+		
 		throw new ReviewNotFoundException();
 	}
 
@@ -105,12 +111,31 @@ public class ReviewController {
 			reviewRepo.save(review);
 		}
 				
-		// How do I grab the current review's Id?
+		// TODO: How do I grab the current review's Id more gracefully than with a hidden form in template?
 		
 		UserComment newUserComment = new UserComment(commentUser, commentContent, review);
 		userCommentRepo.save(newUserComment);
 		return "redirect:/review?id=" + reviewId;
 		
 	}
+	
+	/* Tags */
+	
+	@RequestMapping("/tag")
+	public String findOneTag(@RequestParam(value="id") long tagId, Model model) throws TagNotFoundException {
+		Optional<Tag> tagOptional = tagRepo.findById(tagId);
+		Tag tag = tagOptional.get();
+		
+		if (tagOptional.isPresent()) {
+			model.addAttribute("tag", tag);
+			return "tag";
+		}
+
+		throw new TagNotFoundException();
+		
+	}
+	
+	
+	
 
 }

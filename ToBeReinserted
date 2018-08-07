@@ -1,4 +1,14 @@
-	Review review = reviewRepo.save(new Review("Review 1"));
+	/* Single Tag Tests */
+	
+//	@Test
+//	public void shouldBeOkForSingleTag() throws Exception {
+//		long arbitraryTagId = 1;
+//		when(tagRepo.findById(arbitraryTagId)).thenReturn(Optional.of(tag1));
+//		mvc.perform(get("/tag?id=1")).andExpect(status().isOk());
+//	}
 
-		UserComment comment1 = userCommentRepo.save(new UserComment("user1", "comment", review));
-		UserComment comment2 = userCommentRepo.save(new UserComment("user2", "comment", review));
+//	@MockBean
+//	private TagRepository tagRepo;
+
+//	@Mock
+//	private Tag tag1;

@@ -49,7 +49,11 @@ public class ReviewControllerMockMvcTest {
 	private Category category2;
 	
 	@Mock
+	private Tag tag1;
+	
+	@Mock
 	private Model model;
+	
 	
 	
 	@MockBean
@@ -57,6 +61,12 @@ public class ReviewControllerMockMvcTest {
 	
 	@MockBean
 	private CategoryRepository categoryRepo;
+	
+	@MockBean
+	private UserCommentRepository commentRepo;
+	
+	@MockBean
+	private TagRepository tagRepo;
 
 	@Before
 	public void setUp() {
@@ -85,20 +95,26 @@ public class ReviewControllerMockMvcTest {
 	}
 
 	/* Single Review Tests */
-
+	
+	//Ignore for now
+	//Non-sensical Error
 	@Test
 	public void shouldBeOkForSingleReview() throws Exception {
 		long arbitraryReviewId = 1;
 		when(reviewRepo.findById(arbitraryReviewId)).thenReturn(Optional.of(testReview1));
 		mvc.perform(get("/review?id=1")).andExpect(status().isOk());
 	}
+	
+	//Ignore for now
+	//Non-sensical Error
 
 	@Test
 	public void shouldRouteToSingleReviewView() throws Exception {
-		long arbritraryReviewId = 1L;
+		long arbritraryReviewId = 2L;
 		when(reviewRepo.findById(arbritraryReviewId)).thenReturn(Optional.of(testReview1));
 
-		mvc.perform(get("/review?id=1")).andExpect(view().name(is("review")));
+		mvc.perform(get("/review?id=2")).andExpect(view().name(is("review")));
+		
 	}
 
 	@Test
@@ -159,6 +175,36 @@ public class ReviewControllerMockMvcTest {
 		verify(model).addAttribute("category", category);
 
 	}
+	
+	/* Single Tag View Tests */
+	
+	
+	@Test
+	public void shouldBeOkForSingleTag() throws Exception {
+		long arbitraryTagId = 1;
+		when(tagRepo.findById(arbitraryTagId)).thenReturn(Optional.of(tag1));
+		mvc.perform(get("/tag?id=1")).andExpect(status().isOk());
+	}
+	
+	// Add tests for each model attribute you put into a view
+	@Test
+	public void shouldRouteToSingleTagView() throws Exception {
+		long arbitraryTagId = 1L;
+		when(tagRepo.findById(arbitraryTagId)).thenReturn(Optional.of(tag1));
+
+		mvc.perform(get("/tag?id=1")).andExpect(view().name(is("tag")));
+	}
+	
+	@Test
+	public void shouldPutASingleTagIntoModel() throws Exception {
+		long arbitraryTagId = 1L;
+		when(tagRepo.findById(arbitraryTagId)).thenReturn(Optional.of(tag1));
+		reviewController.findOneTag(arbitraryTagId, model);
+
+		verify(model).addAttribute("tag", tag1);
+
+	}
+
 	
 	
 

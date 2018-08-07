@@ -124,6 +124,10 @@ public class Review {
 	public Collection<UserComment> getUserComments() {
 		return userComments;
 	}
+	
+	public Collection<Tag> getTags() {
+		return tags;
+	}
 
 	@Override
 	public int hashCode() {
