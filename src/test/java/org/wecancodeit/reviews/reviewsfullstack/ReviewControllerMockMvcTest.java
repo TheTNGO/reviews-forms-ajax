@@ -102,6 +102,7 @@ public class ReviewControllerMockMvcTest {
 	public void shouldBeOkForSingleReview() throws Exception {
 		long arbitraryReviewId = 1;
 		when(reviewRepo.findById(arbitraryReviewId)).thenReturn(Optional.of(testReview1));
+		when(testReview1.getCategory()).thenReturn(category);
 		mvc.perform(get("/review?id=1")).andExpect(status().isOk());
 	}
 	
@@ -112,7 +113,7 @@ public class ReviewControllerMockMvcTest {
 	public void shouldRouteToSingleReviewView() throws Exception {
 		long arbritraryReviewId = 2L;
 		when(reviewRepo.findById(arbritraryReviewId)).thenReturn(Optional.of(testReview1));
-
+		when(testReview1.getCategory()).thenReturn(category);
 		mvc.perform(get("/review?id=2")).andExpect(view().name(is("review")));
 		
 	}

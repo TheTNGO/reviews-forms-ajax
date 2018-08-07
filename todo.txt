@@ -5,16 +5,21 @@ Comments
 		 
 	DONE * update single-review page to display comments
 		 
-		 * create Spring JPA repos
+	DONE * create Spring JPA repos
 		 	DONE * Comments
-		 		 * Tags
+		 	DONE * Tags
 
 Tags
-		 * Put in URLs field for reviews
-	DONE * Create Tag class
-		 * create tag REST controller
-			* set up url for 
-		 * allow user to add tags to reviews on page
-			* clicking on a tag should take user to a page that displays all reviews associated with that tag
-	DONE * Add mappings in ReviewController for a single tag view
+
+		* Allow user to add a tag to a single review
+			* tags should not have the same name
+
+		* Allow user to delete a tag from a single review 
+
+	DONE* Create Tag class
+	DONE* create tag REST controller
+			
+		
+	DONE* clicking on a tag should take user to a page that displays all reviews associated with that tag
+	DONE* Add mappings in ReviewController for a single tag view
 		

@@ -1,8 +1,7 @@
 // 8/6 11:51 PM
 // rewview.html Currently showing ALL TAGS IN REPO
 // Figured out how to only retrieve a single review JSON object
-// work on displaying topic tag naems
-// work  throwing topicURLS into JSON objects
+// work on putting tag links with names
 
 let reviewIdTag = document.querySelector('#reviewId');
 let reviewId = reviewIdTag.innerText;
@@ -18,16 +17,24 @@ reviewIdXhr.onreadystatechange = function () {
 
         const tagsContainer = document.querySelector('#tagsContainer');
         
-        for (i = 0; i < jsonResponse.tagNames.length; i++) {
-            let tagNameJson = jsonResponse.tagNames[i];
+        // for (i = 0; i < jsonResponse.tagNames.length; i++) {
+        for (i=0; i < jsonResponse.tags.length; i++){
+            let tagJson = jsonResponse.tags[i];
 
             const tagContainer = document.createElement('div');
+            tagContainer.setAttribute("class", "tagContainer")
+
+            let tagLink = document.createElement('a');
+            tagLink.setAttribute("href", tagJson.tagUrl)
             
             const tagNameText = document.createElement('p');
-            tagNameText.innerText = tagNameJson;
-
+            tagNameText.innerText = tagJson.name;
+            
+            tagLink.appendChild(tagNameText);
+            tagContainer.appendChild(tagLink);
             tagsContainer.appendChild(tagContainer);
-            tagContainer.appendChild(tagNameText);
+           
+           
             
 
         }

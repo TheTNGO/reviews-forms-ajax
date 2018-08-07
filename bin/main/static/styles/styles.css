@@ -23,3 +23,30 @@
 #commentForm{
     margin:10px;
 }
+
+#tagsContainer{
+    display: flex;
+}
+
+.tagContainer{
+    
+    padding: 3px;
+    margin: 2px;
+    border-radius: 5px;
+    background-color: teal;
+}
+
+.tagContainer p{
+    color: white;
+}
+
+.tagContainer p:visited{
+    text-decoration: none;
+    color: white;
+}
+
+.reviewImage{
+    width: 160px;
+    height: 120px;
+}
+

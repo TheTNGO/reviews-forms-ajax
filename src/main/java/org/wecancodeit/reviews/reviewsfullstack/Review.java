@@ -36,7 +36,7 @@ public class Review {
 	@OneToMany(mappedBy = "review")
 	private Collection<UserComment> userComments;
 	
-	@JsonIgnore
+	
 	@ManyToMany(mappedBy = "reviews")
 	private Collection<Tag> tags;
 
@@ -146,6 +146,16 @@ public class Review {
 		}
 		
 		return names;
+	}
+	
+	public Collection<String> getTagUrls(){
+		Collection<String> urls = new ArrayList<>();
+
+		for (Tag t : tags) {
+			urls.add(format("/tag?id=%d", t.getId()));
+		}
+
+		return urls;
 	}
 
 	@Override

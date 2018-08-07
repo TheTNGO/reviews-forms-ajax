@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reviews by Tag</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/styles.css}">
+</head>
+
+<body>
+
+    <h1 th:text="|Reviews tagged with &quot;${tag.name}&quot;|" />
+
+    <div th:each="review : ${tag.reviews}">
+        <div class="reviewLinkContainer">
+            <a th:href="@{/review(id=${review.id})}">
+                <img class="reviewImage" th:src="@{|/images/${review.imageUrl}|}" />
+                <p th:text="${review.title}"></p>
+            </a>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
