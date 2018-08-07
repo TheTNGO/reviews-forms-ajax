@@ -27,8 +27,12 @@
 		<p th:text="${review.content}"></p>
 
 		<h4>
-			<p th:text="'Date: ' + ${review.date}"></p>
-			<p th:text="'Review ID: ' + ${review.id}"></p>
+			<p th:text="'Date: '"></p>
+			<p th:text="'' + ${review.date}"></p>
+			<p th:text="'Review ID: '"></p>
+			
+			<!-- Should be able to hide via CSS and still use in JS -->
+			<p id="reviewId" th:text="'' + ${review.id}"></p>
 		</h4>
 
 		<div class="commentsContainer">

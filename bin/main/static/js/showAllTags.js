@@ -2,31 +2,52 @@
 // rewview.html Currently showing ALL TAGS IN REPO
 // Figure out how to only access tags in current reivew
 
-const xhr = new XMLHttpRequest()
-xhr.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
+let reviewIdTag = document.querySelector('#reviewId');
+let reviewId = reviewIdTag.innerText;
 
-        const resJsonObjects = JSON.parse(xhr.response);
-        console.log({resJsonObjects, xhr});
+console.log(reviewId);
 
-        const tagsContainer = document.querySelector('#tagsContainer');
+const reviewIdXhr = new XMLHttpRequest()
+reviewIdXhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            jsonResponse = JSON.parse(reviewIdXhr.response);
+            console.log({jsonResponse, reviewIdXhr});
 
-        resJsonObjects.forEach(function(tag){
-            
-            const tagItem = document.createElement('div');
-            tagsContainer.appendChild(tagItem);
-
-            const tagName = document.createElement('p');
-            tagName.innerText = tag.name;
-
-            tagItem.appendChild(tagName);
-            
-
-
-        });
-       
+        }
     }
-}
 
-xhr.open('GET', 'http://localhost:8080/tags-json', true)
-xhr.send()
+reviewIdXhr.open('GET', `http://localhost:8080/reviews-json/${reviewId}`);
+reviewIdXhr.send();
+
+
+    
+
+
+// const xhr = new XMLHttpRequest()
+// xhr.onreadystatechange = function () {
+//     if (this.readyState == 4 && this.status == 200) {
+
+//         const resJsonObjects = JSON.parse(xhr.response);
+//         console.log({resJsonObjects, xhr});
+
+//         const tagsContainer = document.querySelector('#tagsContainer');
+
+//         resJsonObjects.forEach(function(tag){
+            
+//             const tagItem = document.createElement('div');
+//             tagsContainer.appendChild(tagItem);
+
+//             const tagName = document.createElement('p');
+//             tagName.innerText = tag.name;
+
+//             tagItem.appendChild(tagName);
+            
+
+
+//         });
+       
+//     }
+// }
+
+// xhr.open('GET', 'http://localhost:8080/reviews-json', true)
+// xhr.send()
