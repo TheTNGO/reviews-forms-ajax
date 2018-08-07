@@ -1,5 +1,6 @@
 package org.wecancodeit.reviews.reviewsfullstack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -15,19 +16,27 @@ import javax.persistence.OneToMany;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import static java.lang.String.format;
+
+
 @Entity
 public class Review {
 
 	@Id
 	@GeneratedValue
 	private long id;
-
+	
+	@JsonIgnore
 	@ManyToOne
 	private Category category;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "review")
 	private Collection<UserComment> userComments;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "reviews")
 	private Collection<Tag> tags;
 
@@ -127,6 +136,16 @@ public class Review {
 	
 	public Collection<Tag> getTags() {
 		return tags;
+	}
+	
+	public Collection<String> getTagNames(){
+		Collection<String> names = new ArrayList<>();
+		
+		for (Tag t : tags) {
+			names.add(format("%s", t.getName()));
+		}
+		
+		return names;
 	}
 
 	@Override
