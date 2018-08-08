@@ -1,62 +1,58 @@
-	/* Single Tag Tests */
+	// DOES NOT WORK 
 	
-//	@Test
-//	public void shouldBeOkForSingleTag() throws Exception {
-//		long arbitraryTagId = 1;
-//		when(tagRepo.findById(arbitraryTagId)).thenReturn(Optional.of(tag1));
-//		mvc.perform(get("/tag?id=1")).andExpect(status().isOk());
-//	}
+	@PostMapping("/{id}/add-tag")
+	public String addTagToReview(@PathVariable(value = "id") long reviewId, @RequestParam(value = "name") String name) {
 
-//	@MockBean
-//	private TagRepository tagRepo;
+		Optional<Review> reviewOptional = reviewRepo.findById(reviewId);
+		Review review = reviewOptional.get();
+		Long reviewOptionalId = review.getId();
 
-//	@Mock
-//	private Tag tag1;
+		Tag tagSearchResult = tagRepo.findByNameIgnoreCaseLike(name);
 
+		if (!(tagSearchResult == null)) {
 
-let reviewIdTag = document.querySelector('#reviewId');
-let reviewId = reviewIdTag.innerText;
+			Collection<Review> reviewSearchResults = reviewRepo.findByTagsId(tagSearchResult.getId());
+			if (!(reviewSearchResults.contains(reviewOptionalId))) {
+				tagSearchResult.addReview(review);
+				tagRepo.save(tagSearchResult);
+				return "Tag found. Review NOT found. Adding review to Tag. Tag Saved.";
+			}
 
-console.log(reviewId);
+			return "Tag found. Review found. Doing nothing (supposedly).";
 
-const reviewIdXhr = new XMLHttpRequest()
-reviewIdXhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            jsonResponse = JSON.parse(reviewIdXhr.response);
-            console.log({jsonResponse, reviewIdXhr});
+		} else {
+			tagSearchResult = new Tag(name, review);
+			tagRepo.save(tagSearchResult);
+			return "Tag NOT found. Creating new tag and adding review to it. Tag Saved.";
+		}
 
-        }
-    }
+	}
 
-reviewIdXhr.open('GET', `http://localhost:8080/reviews-json/${reviewId}`);
-reviewIdXhr.send();
+	// WORKS but has errors; repo should bring up a collection of reviews (many to many relationship)
 
+	@PostMapping("/{id}/add-tag")
+	public String addTagToReview(@PathVariable(value = "id") long reviewId, @RequestParam(value = "name") String name) {
 
-const xhr = new XMLHttpRequest()
-xhr.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
+		Optional<Review> reviewOptional = reviewRepo.findById(reviewId);
+		Review review = reviewOptional.get();
 
-        const resJsonObjects = JSON.parse(xhr.response);
-        console.log({resJsonObjects, xhr});
+		Tag tagSearchResult = tagRepo.findByNameIgnoreCaseLike(name);
 
-        const tagsContainer = document.querySelector('#tagsContainer');
+		if (!(tagSearchResult == null)) {
 
-        resJsonObjects.forEach(function(tag){
-            
-            const tagItem = document.createElement('div');
-            tagsContainer.appendChild(tagItem);
+			Review reviewSearchResult = reviewRepo.findByTagsId(tagSearchResult.getId());
+			if (reviewSearchResult != review ) {
+				tagSearchResult.addReview(review);
+				tagRepo.save(tagSearchResult);
+				return "Tag found. Review NOT found. Adding review to Tag. Tag Saved.";
+			}
 
-            const tagName = document.createElement('p');
-            tagName.innerText = tag.name;
+			return "Tag found. Review found. Doing nothing (supposedly).";
 
-            tagItem.appendChild(tagName);
-            
+		} else {
+			tagSearchResult = new Tag(name, review);
+			tagRepo.save(tagSearchResult);
+			return "Tag NOT found. Creating new tag and adding review to it. Tag Saved.";
+		}
 
-
-        });
-       
-    }
-}
-
-xhr.open('GET', 'http://localhost:8080/tags-json', true)
-xhr.send()
+	}

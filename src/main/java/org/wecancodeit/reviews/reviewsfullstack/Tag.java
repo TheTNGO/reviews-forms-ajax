@@ -74,5 +74,9 @@ public class Tag {
 		return url;
 
 	}
+	
+	public void addReview(Review review) {
+		reviews.add(review);
+	}
 
 }

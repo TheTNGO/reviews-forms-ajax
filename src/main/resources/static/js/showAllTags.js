@@ -8,7 +8,7 @@ const tagsContainer = document.querySelector('#tagsContainer');
 let reviewId = reviewIdTag.innerText;
 showAllTags();
 
-function removeAllTags(){
+let removeAllTags = function(){
     while (tagsContainer.firstChild) {
         tagsContainer.removeChild(tagsContainer.firstChild);
     }
@@ -19,6 +19,7 @@ function showAllTags(){
     const reviewIdXhr = new XMLHttpRequest()
     reviewIdXhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            removeAllTags();
             jsonResponse = JSON.parse(reviewIdXhr.response);
             // x = jsonResponse.tagNames[0];
             console.log({jsonResponse, reviewIdXhr});
@@ -53,18 +54,31 @@ function showAllTags(){
 /* Add Tags Button */
 
 const addTagButton = document.querySelector('#addTagButton'); 
+
+
 addTagButton.addEventListener('click', function(){
     const nameInput = prompt('Type the name of the Tag for this Review');
     
     const addTagXhr = new XMLHttpRequest()
+
+    addTagXhr.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            showAllTags();
+            console.log(addTagXhr.response);
+        }
+    }
+    
     
     addTagXhr.open('POST', `http://localhost:8080/reviews-json/${reviewId}/add-tag?name=${nameInput}` )
     addTagXhr.send();
-
-    removeAllTags();
-    showAllTags();
+    
 
 })
+    
+
+
+
+
 
 
 

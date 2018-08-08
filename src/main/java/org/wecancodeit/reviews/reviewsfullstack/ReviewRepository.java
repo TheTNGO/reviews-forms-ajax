@@ -13,5 +13,9 @@ public interface ReviewRepository extends CrudRepository<Review, Long>  {
 
 	Review findByTitle(String reviewTitle);
 
+	Collection<Review> findByTagsId(Long tagId);  // this one should be how its done; finding correct conditional for REST controller
+	
+//	Review findByTagsId(Long tagId); // comes up with error, but is effective
+
 	
 }

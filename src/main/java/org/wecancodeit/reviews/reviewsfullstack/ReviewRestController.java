@@ -1,5 +1,6 @@
 package org.wecancodeit.reviews.reviewsfullstack;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.annotation.Resource;
@@ -32,13 +33,31 @@ public class ReviewRestController {
 	}
 
 	@PostMapping("/{id}/add-tag")
-	public void addTagToReview(@PathVariable(value = "id") long reviewId, @RequestParam(value = "name") String name) {
+	public String addTagToReview(@PathVariable(value = "id") long reviewId, @RequestParam(value = "name") String name) {
 
 		Optional<Review> reviewOptional = reviewRepo.findById(reviewId);
 		Review review = reviewOptional.get();
 
-		Tag tagToAdd = new Tag(name, review);
-		tagRepo.save(tagToAdd);
+		Tag tagSearchResult = tagRepo.findByNameIgnoreCaseLike(name);
+
+		if (!(tagSearchResult == null)) {
+
+			Collection<Review> reviewSearchResults = reviewRepo.findByTagsId(tagSearchResult.getId());
+			for (Review result : reviewSearchResults) {
+				if (result.equals(review)) {
+					return "Tag found. Review found. Doing nothing (supposedly).";
+				}
+			}
+			
+			tagSearchResult.addReview(review);
+			tagRepo.save(tagSearchResult);
+			return "Tag found. Review NOT found. Adding review to Tag. Tag Saved.";
+
+		} else {
+			tagSearchResult = new Tag(name, review);
+			tagRepo.save(tagSearchResult);
+			return "Tag NOT found. Creating new tag and adding review to it. Tag Saved.";
+		}
 
 	}
 
