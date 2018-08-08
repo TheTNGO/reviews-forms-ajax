@@ -48,6 +48,18 @@ function showAllTags(){
                 // tagContainer.appendChild(removeTagButton);
                 tagsContainer.appendChild(tagContainer);
             }
+
+            if(jsonResponse.tags.length === 0){
+                let noTagsDisplay = document.createElement('div');
+                noTagsDisplay.setAttribute("class", "tagContainer");
+
+                let noTagsText = document.createElement('p');
+                noTagsText.innerText = "No tags. Add some!";
+
+                noTagsDisplay.appendChild(noTagsText);
+                tagsContainer.appendChild(noTagsDisplay);
+
+            }
        
        }
        

@@ -30,7 +30,7 @@
 			<p th:text="'Date: '"></p>
 			<p th:text="'' + ${review.date}"></p>
 			<p th:text="'Review ID: '"></p>
-			
+
 			<!-- Should be able to hide via CSS and still use in JS -->
 			<p id="reviewId" th:text="'' + ${review.id}"></p>
 		</h4>
@@ -39,14 +39,14 @@
 			<h2>
 				Comments:
 			</h2>
-			<div class="noComments"th:if="${review.userComments.isEmpty()}">
+			<div class="noComments" th:if="${review.userComments.isEmpty()}">
 				<p>No comments</p>
 			</div>
 			<div class="existingComments" th:each="comment : ${review.userComments}">
 				<p th:text="${comment.content}"></p>
 				<p th:text="'- ' + ${comment.user}"></p>
 			</div>
-			
+
 			<h2>Add a comment:</h2>
 			<form id="commentForm" method="POST">
 				<div style="display: none">
@@ -67,17 +67,11 @@
 		</div>
 
 		<h2>Tags:</h2>
-		<div id="tagsContainer">
-			
-			<div class="noComments"th:if="${review.tags.isEmpty()}">
-				<p>No tags. Add some!</p>
-			</div>
-
+		<div id="tagsContainer"></div>
 		
-		</div>
 		<button id="addTagButton">Add Tag</button>
 		<button id="removeTagButton">Remove Tag</button>
-		
+
 
 	</main>
 
