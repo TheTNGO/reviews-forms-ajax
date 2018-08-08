@@ -37,9 +37,15 @@ function showAllTags(){
                 
                 const tagNameText = document.createElement('p');
                 tagNameText.innerText = tagJson.name;
+               
+               // TODO: allow removal buttons to remove individual tags without having to type in a name
+                // const removeTagButton = document.createElement('p');
+                // removeTagButton.setAttribute("class", "removeTagButton");
+                // removeTagButton.innerHTML = "&times;"
                 
                 tagLink.appendChild(tagNameText);
                 tagContainer.appendChild(tagLink);
+                // tagContainer.appendChild(removeTagButton);
                 tagsContainer.appendChild(tagContainer);
             }
        
@@ -57,20 +63,63 @@ const addTagButton = document.querySelector('#addTagButton');
 
 
 addTagButton.addEventListener('click', function(){
-    const nameInput = prompt('Type the name of the Tag for this Review');
+    let nameInput = prompt('Type the name of the Tag to ADD to this Review');
     
-    const addTagXhr = new XMLHttpRequest()
-
-    addTagXhr.onreadystatechange = function(){
-        if (this.readyState == 4 && this.status == 200) {
-            showAllTags();
-            console.log(addTagXhr.response);
-        }
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm,'');
     }
     
+    nameInput = myTrim(nameInput);
+    console.log(nameInput.length);
+
+    if(nameInput){
+        const addTagXhr = new XMLHttpRequest()
+
+        addTagXhr.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                showAllTags();
+                console.log(addTagXhr.response);
+            }
+        }
+        
+        
+        addTagXhr.open('POST', `http://localhost:8080/reviews-json/${reviewId}/add-tag?name=${nameInput}` )
+        addTagXhr.send();
+    } else{
+        alert("TYPE SOMETHIN\' WILL YA!");
+    }})
+
+/* Remove Tags Button */
+
+const removeTagButton = document.querySelector('#removeTagButton');
+
+removeTagButton.addEventListener('click', function(){
+    let nameInput = prompt('Type the name of the Tag to DELETE from this Review');
     
-    addTagXhr.open('POST', `http://localhost:8080/reviews-json/${reviewId}/add-tag?name=${nameInput}` )
-    addTagXhr.send();
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm,'');
+    }
+    
+    nameInput = myTrim(nameInput);
+    console.log(nameInput.length);
+
+    if(nameInput){
+        const removeTagXhr = new XMLHttpRequest()
+
+        removeTagXhr.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                showAllTags();
+                console.log(removeTagXhr.response);
+            }
+        }
+        
+        
+        removeTagXhr.open('PUT', `http://localhost:8080/reviews-json/${reviewId}/remove-tag?name=${nameInput}` )
+        removeTagXhr.send();
+    } else{
+        alert("TYPE SOMETHIN\' WILL YA!");
+    }
+    
     
 
 })

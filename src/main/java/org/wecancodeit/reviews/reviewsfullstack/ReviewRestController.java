@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +58,30 @@ public class ReviewRestController {
 			tagSearchResult = new Tag(name, review);
 			tagRepo.save(tagSearchResult);
 			return "Tag NOT found. Creating new tag and adding review to it. Tag Saved.";
+		}
+
+	}
+	
+	@PutMapping("/{id}/remove-tag")
+	public String RemoveTagFromReview(@PathVariable(value = "id") long reviewId, @RequestParam(value = "name") String name) {
+
+		Optional<Review> reviewOptional = reviewRepo.findById(reviewId);
+		Review review = reviewOptional.get();
+
+		Tag tagSearchResult = tagRepo.findByNameIgnoreCaseLike(name);
+
+		if (!(tagSearchResult == null)) {
+
+//			review.getTags().remove(tagSearchResult);
+//			reviewRepo.save(review);
+			
+			tagSearchResult.getReviews().remove(review); // review-tag relationship is stored in Tag class. must delete review here to kill relationship.
+			tagRepo.save(tagSearchResult);
+			
+			return "Tag Removed";
+
+		} else {
+			return "Tag NOT removed; not found";
 		}
 
 	}
