@@ -4,77 +4,74 @@
 // work on putting tag links with names
 
 let reviewIdTag = document.querySelector('#reviewId');
+const tagsContainer = document.querySelector('#tagsContainer');
 let reviewId = reviewIdTag.innerText;
+showAllTags();
 
-console.log(reviewId);
+function removeAllTags(){
+    while (tagsContainer.firstChild) {
+        tagsContainer.removeChild(tagsContainer.firstChild);
+    }
+}
 
-const reviewIdXhr = new XMLHttpRequest()
-reviewIdXhr.onreadystatechange = function () {
+function showAllTags(){
+    
+    const reviewIdXhr = new XMLHttpRequest()
+    reviewIdXhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             jsonResponse = JSON.parse(reviewIdXhr.response);
             // x = jsonResponse.tagNames[0];
             console.log({jsonResponse, reviewIdXhr});
-
-        const tagsContainer = document.querySelector('#tagsContainer');
+ 
         
         // for (i = 0; i < jsonResponse.tagNames.length; i++) {
-        for (i=0; i < jsonResponse.tags.length; i++){
-            let tagJson = jsonResponse.tags[i];
+            for (i=0; i < jsonResponse.tags.length; i++){
+                let tagJson = jsonResponse.tags[i];
 
-            const tagContainer = document.createElement('div');
-            tagContainer.setAttribute("class", "tagContainer")
+                const tagContainer = document.createElement('div');
+                tagContainer.setAttribute("class", "tagContainer")
 
-            let tagLink = document.createElement('a');
-            tagLink.setAttribute("href", tagJson.tagUrl)
-            
-            const tagNameText = document.createElement('p');
-            tagNameText.innerText = tagJson.name;
-            
-            tagLink.appendChild(tagNameText);
-            tagContainer.appendChild(tagLink);
-            tagsContainer.appendChild(tagContainer);
-           
-           
-            
-
-        }
+                let tagLink = document.createElement('a');
+                tagLink.setAttribute("href", tagJson.tagUrl)
+                
+                const tagNameText = document.createElement('p');
+                tagNameText.innerText = tagJson.name;
+                
+                tagLink.appendChild(tagNameText);
+                tagContainer.appendChild(tagLink);
+                tagsContainer.appendChild(tagContainer);
+            }
        
        }
+       
     }
+    reviewIdXhr.open('GET', `http://localhost:8080/reviews-json/${reviewId}`);
+    reviewIdXhr.send()
+
+}
+
+/* Add Tags Button */
+
+const addTagButton = document.querySelector('#addTagButton'); 
+addTagButton.addEventListener('click', function(){
+    const nameInput = prompt('Type the name of the Tag for this Review');
+    
+    const addTagXhr = new XMLHttpRequest()
+    
+    addTagXhr.open('POST', `http://localhost:8080/reviews-json/${reviewId}/add-tag?name=${nameInput}` )
+    addTagXhr.send();
+
+    removeAllTags();
+    showAllTags();
+
+})
 
 
-reviewIdXhr.open('GET', `http://localhost:8080/reviews-json/${reviewId}`);
-reviewIdXhr.send()
+
+
+
+
+
 
 
     
-
-
-// const xhr = new XMLHttpRequest()
-// xhr.onreadystatechange = function () {
-//     if (this.readyState == 4 && this.status == 200) {
-
-//         const jsonResponse = JSON.parse(xhr.response);
-//         console.log({resJsonObjects, xhr});
-
-//         const tagsContainer = document.querySelector('#tagsContainer');
-
-//         jsonResponse.forEach(function(review){
-            // review.tagName
-//             const tagItem = document.createElement('div');
-//             tagsContainer.appendChild(tagItem);
-
-//             const tagName = document.createElement('p');
-//             tagName.innerText = tag.name;
-
-//             tagItem.appendChild(tagName);
-            
-
-
-//         });
-       
-//     }
-// }
-
-// xhr.open('GET', 'http://localhost:8080/reviews-json', true)
-// xhr.send()

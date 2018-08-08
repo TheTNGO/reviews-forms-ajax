@@ -66,12 +66,16 @@
 			</form>
 		</div>
 
+		<h2>Tags:</h2>
 		<div id="tagsContainer">
-			<h2>Tags:</h2>
+			
 			<div class="noComments"th:if="${review.tags.isEmpty()}">
 				<p>No tags. Add some!</p>
-			</div> 
+			</div>
+
+		
 		</div>
+		<button id="addTagButton">Add Tag</button>
 		
 
 	</main>
